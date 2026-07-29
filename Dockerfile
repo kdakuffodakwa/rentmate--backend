@@ -10,4 +10,4 @@ RUN ./mvnw clean package -DskipTests
 
 EXPOSE 9090
 
-CMD ["java", "-jar", "target/*.jar"]
+CMD sh -c "java -jar target/*.jar"
