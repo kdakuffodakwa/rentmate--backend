@@ -71,4 +71,12 @@ public class AdminController {
         itemRepository.deleteById(itemId);
         return ResponseEntity.ok(Map.of("message", "Item deleted"));
     }
+    @GetMapping("/bookings")
+    public ResponseEntity<?> getAllBookings() {
+        return ResponseEntity.ok(bookingRepository.findAll());
+    }
+    @GetMapping("/reviews")
+    public ResponseEntity<?> getAllReviews() {
+        return ResponseEntity.ok(reviewRepository.findAll());
+    }
 }
