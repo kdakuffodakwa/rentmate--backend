@@ -79,4 +79,35 @@ public class AdminController {
     public ResponseEntity<?> getAllReviews() {
         return ResponseEntity.ok(reviewRepository.findAll());
     }
+    @GetMapping("/analytics")
+    public ResponseEntity<?> getAnalytics() {
+        List<rentmate.booking.Booking> allBookings = bookingRepository.findAll();
+        List<Item> allItems = itemRepository.findAll();
+
+        double totalRevenue = allBookings.stream()
+                .filter(b -> "completed".equals(b.getStatus()))
+                .mapToDouble(b -> b.getTotalPrice().doubleValue())
+                .sum();
+
+        long completedBookings = allBookings.stream()
+                .filter(b -> "completed".equals(b.getStatus()))
+                .count();
+
+        long pendingBookings = allBookings.stream()
+                .filter(b -> "pending".equals(b.getStatus()))
+                .count();
+
+        Map<String, Long> categoryBreakdown = allItems.stream()
+                .collect(java.util.stream.Collectors.groupingBy(
+                        Item::getCategory,
+                        java.util.stream.Collectors.counting()
+                ));
+
+        return ResponseEntity.ok(Map.of(
+                "totalRevenue", totalRevenue,
+                "completedBookings", completedBookings,
+                "pendingBookings", pendingBookings,
+                "categoryBreakdown", categoryBreakdown
+        ));
+    }
 }
