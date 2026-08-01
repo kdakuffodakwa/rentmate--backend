@@ -15,7 +15,7 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public User register(String fullName, String phoneNumber, String email, String password) {
+    public User register(String fullName, String phoneNumber, String email, String password, String role) {
         if (userRepository.existsByPhoneNumber(phoneNumber)) {
             throw new RuntimeException("Phone number already registered");
         }
@@ -28,6 +28,7 @@ public class UserService {
         user.setPhoneNumber(phoneNumber);
         user.setEmail(email);
         user.setPasswordHash(passwordEncoder.encode(password));
+        user.setRole(role != null && !role.isBlank() ? role : "renter");
 
         return userRepository.save(user);
     }

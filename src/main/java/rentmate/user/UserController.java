@@ -18,7 +18,8 @@ public class UserController {
                 body.get("fullName"),
                 body.get("phoneNumber"),
                 body.get("email"),
-                body.get("password")
+                body.get("password"),
+                body.get("role")
         );
         return ResponseEntity.ok(Map.of(
                 "id", user.getId(),
