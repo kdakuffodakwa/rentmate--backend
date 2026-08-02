@@ -55,7 +55,7 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable java.util.UUID userId, @RequestBody Map<String, String> body) {
-        User user = userService.updateUser(userId, body.get("fullName"), body.get("email"));
+        User user = userService.updateUser(userId, body.get("fullName"), body.get("email"), body.get("role"));
         return ResponseEntity.ok(Map.of(
                 "id", user.getId(),
                 "fullName", user.getFullName(),

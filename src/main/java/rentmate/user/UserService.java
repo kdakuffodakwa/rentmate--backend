@@ -48,15 +48,18 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public User updateUser(UUID userId, String fullName, String email) {
+    public User updateUser(UUID userId, String fullName, String email, String role) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-               if (fullName != null && !fullName.isBlank()) {
+        if (fullName != null && !fullName.isBlank()) {
             user.setFullName(fullName);
         }
         if (email != null && !email.isBlank()) {
             user.setEmail(email);
+        }
+        if (role != null && !role.isBlank()) {
+            user.setRole(role);
         }
 
         return userRepository.save(user);
