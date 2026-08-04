@@ -40,4 +40,9 @@ public class MessageController {
     public ResponseEntity<List<Message>> getUnread(@PathVariable UUID receiverId) {
         return ResponseEntity.ok(messageService.getUnreadMessages(receiverId));
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Message>> getAllForUser(@PathVariable UUID userId) {
+        return ResponseEntity.ok(messageService.getAllMessagesForUser(userId));
+    }
 }

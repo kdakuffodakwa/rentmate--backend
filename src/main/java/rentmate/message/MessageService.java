@@ -46,4 +46,8 @@ public class MessageService {
     public List<Message> getUnreadMessages(UUID receiverId) {
         return messageRepository.findByReceiver_IdAndIsReadFalse(receiverId);
     }
+
+    public List<Message> getAllMessagesForUser(UUID userId) {
+        return messageRepository.findBySender_IdOrReceiver_IdOrderBySentAtDesc(userId, userId);
+    }
 }
