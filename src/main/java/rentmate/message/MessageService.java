@@ -50,4 +50,12 @@ public class MessageService {
     public List<Message> getAllMessagesForUser(UUID userId) {
         return messageRepository.findBySender_IdOrReceiver_IdOrderBySentAtDesc(userId, userId);
     }
+
+    public void markAsRead(UUID bookingId, UUID receiverId) {
+        List<Message> unread = messageRepository.findByBooking_IdAndReceiver_IdAndIsReadFalse(bookingId, receiverId);
+        for (Message message : unread) {
+            message.setIsRead(true);
+        }
+        messageRepository.saveAll(unread);
+    }
 }

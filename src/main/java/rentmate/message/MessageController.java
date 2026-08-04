@@ -45,4 +45,10 @@ public class MessageController {
     public ResponseEntity<List<Message>> getAllForUser(@PathVariable UUID userId) {
         return ResponseEntity.ok(messageService.getAllMessagesForUser(userId));
     }
+
+    @PutMapping("/read/{bookingId}/{userId}")
+    public ResponseEntity<?> markAsRead(@PathVariable UUID bookingId, @PathVariable UUID userId) {
+        messageService.markAsRead(bookingId, userId);
+        return ResponseEntity.ok(Map.of("message", "Marked as read"));
+    }
 }
